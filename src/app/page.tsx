@@ -1,16 +1,23 @@
-// pages/index.tsx
-
+"use client"
 import React, { useEffect } from "react";
 import Lenis from "lenis";
 
 const Home: React.FC = () => {
-	// useEffect hook om de Lenis raf loop te starten
+	let lenis: Lenis;
+
 	useEffect(() => {
-		requestAnimationFrame(handleScrollAnimation); // Start de scrollanimatie
+		lenis = new Lenis();
+		requestAnimationFrame(handleScrollAnimation);
+
 		return () => {
-			lenis.destroy(); // Schoonmaken wanneer component wordt verwijderd
+			lenis.destroy();
 		};
 	}, []);
+
+	const handleScrollAnimation = (time: number) => {
+		lenis.raf(time);
+		requestAnimationFrame(handleScrollAnimation);
+	};
 
 	return (
 		<div className="container mx-auto">
